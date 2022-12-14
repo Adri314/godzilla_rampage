@@ -720,7 +720,7 @@ title.setMaxFontHeight(12)
 title.setPosition(80, 6)
 title.setBorder(2, 6, 2)
 title.setOutline(1, 1)
-subtitle = textsprite.create("to start", 0, 1)
+subtitle = textsprite.create(" to start", 0, 1)
 subtitle.setIcon(img`
     . . . . 6 6 6 6 6 6 6 . . . . 
     . . 6 6 7 7 7 7 7 7 7 6 6 . . 
@@ -768,4 +768,14 @@ game.onUpdateInterval(800, function () {
         )
         projectile.y = yPositions._pickRandom() + 3
     }
+})
+forever(function () {
+    music.playMelody("E D G F B A C5 B ", 140)
+    music.rest(music.beat(BeatFraction.Whole))
+    music.playMelody("C5 A B G A F G E ", 140)
+    music.rest(music.beat(BeatFraction.Whole))
+    music.playMelody("B A G A G F A C5 ", 140)
+    music.rest(music.beat(BeatFraction.Whole))
+    music.playMelody("G F G A - F E D ", 140)
+    music.rest(music.beat(BeatFraction.Whole))
 })
