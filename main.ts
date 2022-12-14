@@ -7,8 +7,12 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     game.showLongText("Escaped cars:" + escapedCars, DialogLayout.Center)
 })
+info.onCountdownEnd(function () {
+    game.over(true)
+})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, otherSprite) {
     if (sprite.x < otherSprite.x) {
+        music.knock.play()
         otherSprite.setVelocity(-50, 0)
         animation.runImageAnimation(
         otherSprite,
@@ -97,6 +101,9 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
 sprites.onDestroyed(SpriteKind.Projectile, function (sprite) {
     if (sprite.x < 0) {
         escapedCars += 1
+        if (escapedCars > 10) {
+            game.over(false)
+        }
     }
 })
 let projectile: Sprite = null
@@ -605,6 +612,7 @@ let carAnim = [[img`
     . . . . c f f . . . . c f f . . 
     `]]
 escapedCars = 0
+info.startCountdown(60)
 game.onUpdateInterval(800, function () {
     projectile = sprites.createProjectileFromSide(img`
         . . . . . . . . . . . . . . . . 
