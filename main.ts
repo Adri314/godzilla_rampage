@@ -10,6 +10,12 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (gameOn) {
         game.showLongText("Escaped cars:" + escapedCars, DialogLayout.Center)
     } else {
+        logo.destroy()
+        title.destroy()
+        subtitle.destroy()
+        game.showLongText("Don't let the cars escape!", DialogLayout.Center)
+        game.showLongText("Arrows to move up and down. A to see how many cars escaped.", DialogLayout.Center)
+        game.showLongText("If more than 10 cars escape it is game over.", DialogLayout.Center)
         gameOn = true
         initGame()
     }
@@ -453,6 +459,9 @@ let escapedCars = 0
 let yPositions: number[] = []
 let godzilla: Sprite = null
 let posIndex = 0
+let subtitle: TextSprite = null
+let title: TextSprite = null
+let logo: Sprite = null
 let gameOn = false
 gameOn = false
 game.setDialogFrame(img`
@@ -627,7 +636,7 @@ scene.setBackgroundImage(img`
     bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
     bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
     `)
-let logo = sprites.create(img`
+logo = sprites.create(img`
     ........................bbbbbbbbbbbbbbbbbbb..................................
     ......................bbb5555555555555555bbbbb...............................
     .....................bb5555555555555555555555bbb......bbc....................
@@ -705,7 +714,32 @@ let logo = sprites.create(img`
     ...............cc...........................................ccccdddccccdccccc
     ...............................................................ccccc..ccc....
     `, SpriteKind.Player)
-logo.setPosition(80, 80)
+logo.setPosition(80, 62)
+title = textsprite.create("Godzilla", 5, 6)
+title.setMaxFontHeight(12)
+title.setPosition(80, 6)
+title.setBorder(2, 6, 2)
+title.setOutline(1, 1)
+subtitle = textsprite.create("to start", 0, 1)
+subtitle.setIcon(img`
+    . . . . 6 6 6 6 6 6 6 . . . . 
+    . . 6 6 7 7 7 7 7 7 7 6 6 . . 
+    . 6 6 7 7 7 8 8 8 7 7 7 6 6 . 
+    . 6 7 7 7 8 8 7 8 8 7 7 7 6 . 
+    . c 7 7 8 8 8 8 8 8 8 7 7 c . 
+    . c 9 7 8 7 7 7 7 7 8 7 9 c . 
+    . c 9 9 7 7 7 7 7 7 7 9 9 c . 
+    . c 6 6 9 9 9 9 9 9 9 6 6 c . 
+    c c 6 6 6 6 6 6 6 6 6 6 6 c c 
+    c d c c 6 6 6 6 6 6 6 c c d c 
+    c d d d c c c c c c c d d d c 
+    c c b d d d d d d d d d b c c 
+    c c c c c b b b b b c c c c c 
+    c c b b b b b b b b b b b c c 
+    . c c b b b b b b b b b c c . 
+    . . . c c c c c c c c c . . . 
+    `)
+subtitle.setPosition(80, 110)
 game.onUpdateInterval(800, function () {
     if (gameOn) {
         projectile = sprites.createProjectileFromSide(img`
